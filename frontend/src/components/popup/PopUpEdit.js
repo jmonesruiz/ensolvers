@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./PopUpEdit.scss";
 import PopUp from "./PopUp";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,11 @@ function PopUpEdit(props) {
 	const item = useSelector((state) => state.popup.data);
 	const dispatch = useDispatch();
 	const [value, setValue] = useState(item.name);
+
+	const inputRef = useRef();
+	useEffect(() => {
+		inputRef.current.focus();
+	}, []);
 
 	const valid = value.trim() !== "";
 
@@ -19,6 +24,7 @@ function PopUpEdit(props) {
 					<p className="pop-up-edit__message">{`Editing ${props.type} "${item.name}"`}</p>
 					<div className="pop-up-edit__input-container">
 						<input
+							ref={inputRef}
 							type="text"
 							name=""
 							id=""
