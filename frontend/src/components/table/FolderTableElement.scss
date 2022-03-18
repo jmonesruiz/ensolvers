@@ -1,0 +1,47 @@
+@import "../../variables";
+.folder-table-element {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.8rem;
+	padding-left: 1.2rem;
+	color: $text-color-disable;
+	transition: color 0.15s ease-in-out;
+
+	&__icon-container {
+		position: relative;
+		width: 2.4rem;
+		height: 2.4rem;
+	}
+	&__icon {
+		color: $primary-color;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 2.4rem;
+
+		&--closed {
+			@extend .folder-table-element__icon;
+		}
+		&--open {
+			@extend .folder-table-element__icon;
+			opacity: 0;
+		}
+	}
+
+	&:hover {
+		color: $text-color;
+
+		.folder-table-element {
+			&__icon {
+				&--closed {
+					opacity: 0;
+				}
+				&--open {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}

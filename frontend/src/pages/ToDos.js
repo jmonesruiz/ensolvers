@@ -1,8 +1,14 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import "./Todos.scss";
 
 function Todos() {
-	return <></>;
+	const { folderId } = useParams();
+	return (
+		<div className="todos">
+			<h2>{folderId}</h2>
+		</div>
+	);
 }
 
 export default Todos;

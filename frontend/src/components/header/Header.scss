@@ -1,0 +1,23 @@
+@import "../../variables";
+.header {
+	display: flex;
+	align-items: center;
+	border-bottom: 0.1rem solid $bg-color;
+	padding-bottom: 0.8rem;
+	gap: 0.4rem;
+
+	&__title {
+		font-size: 2.8rem;
+		font-weight: 500;
+	}
+	&__connector {
+		color: $text-color-disable;
+		margin-top: 0.6rem;
+		font-size: 2rem;
+	}
+	&__subtitle {
+		margin-top: 0.8rem;
+		font-size: 1.8rem;
+		font-weight: 500;
+	}
+}

@@ -1,0 +1,66 @@
+@import "../../variables";
+
+.table {
+	width: 100%;
+	background-color: $component-color;
+	border-radius: 0.4rem;
+	box-shadow: $component-shadow;
+	font-size: 1.8rem;
+	overflow: hidden;
+
+	&__row {
+		font-size: 2.2rem;
+		color: $text-color-lessen;
+		min-height: 4rem;
+		display: grid;
+		grid-template-columns: 1fr 4rem 4rem;
+
+		&:nth-child(even) {
+			background-color: $component-color-highlight;
+		}
+	}
+
+	&__cell {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:first-child {
+			justify-content: flex-start;
+		}
+		&:not(:last-child) {
+			border-right: 0.1rem solid $surface-color;
+		}
+	}
+
+	&__btn {
+		width: 2.8rem;
+		height: 2.8rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: $primary-color;
+		transition: color 0.15s ease-in-out;
+
+		&--edit {
+			@extend .table__btn;
+			&:hover {
+				cursor: pointer;
+				color: $edit-color;
+			}
+		}
+
+		&--delete {
+			@extend .table__btn;
+			&:hover {
+				cursor: pointer;
+				color: $delete-color;
+			}
+		}
+	}
+	&__icon-delete {
+		font-size: 2rem;
+	}
+	&__icon-edit {
+		font-size: 2.6rem;
+	}
+}

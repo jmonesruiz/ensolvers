@@ -68,6 +68,7 @@ export default {
 		static: {
 			directory: OUTPUT_DIR,
 		},
+		historyApiFallback: { index: "/" },
 		devMiddleware: {
 			stats: {
 				colors: true,
