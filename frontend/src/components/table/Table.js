@@ -4,8 +4,8 @@ import { FaTrash as DeleteIcon } from "react-icons/fa";
 import { AiFillEdit as EditIcon } from "react-icons/ai";
 
 function Table(props) {
-	let rows = props.items.map((item) => (
-		<div className="table__row" key={item.id}>
+	let rows = props.items.map((item, index) => (
+		<div className="table__row" key={index}>
 			<div className="table__cell">{item.element}</div>
 			<div className="table__cell">
 				<button
