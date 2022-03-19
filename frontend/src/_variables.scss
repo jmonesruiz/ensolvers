@@ -9,7 +9,10 @@ $text-color-disable: #d8dee9;
 
 $primary-color: #88c0d0;
 
-$edit-color: #ebcb8b;
-$delete-color: #bf616a;
+$warning-color: #ebcb8b;
+$error-color: #bf616a;
+$success-color: #a3be8c;
+$edit-color: $warning-color;
+$delete-color: $error-color;
 
 $component-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.25);

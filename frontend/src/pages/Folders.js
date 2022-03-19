@@ -1,23 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Folders.scss";
 import Header from "../components/header/Header";
 import Table from "../components/table/Table";
 import ItemInput from "../components/itemInput/ItemInput";
 import { useSelector, useDispatch } from "react-redux";
-import { addFolder, editFolder, fetchFolders } from "../state/folders/foldersSlice";
+import { addFolder, editFolder, fetchFolders, deleteFolder } from "../state/folders/foldersSlice";
 import FolderTableElement from "../components/table/FolderTableElement";
 import { RiFolderAddFill as AddFolderIcon } from "react-icons/ri";
 import PopUpDelete from "../components/popup/PopUpDelete";
 import PopUpEdit from "../components/popup/PopUpEdit";
 import { openPopUp } from "../state/popup/popupSlice";
-import { deleteFolder } from "../state/folders/foldersSlice";
 
 function Folders() {
-	const folders = useSelector((state) => state.folders);
+	const firstLoad = useSelector((state) => state.folders.firstFetch);
+	const folders = useSelector((state) => state.folders.folders);
 	const popUpStatus = useSelector((state) => state.popup.status);
 	const dispatch = useDispatch();
+	const inputRef = useRef();
 
 	useEffect(() => {
+		if (firstLoad) inputRef.current.focus();
 		dispatch(fetchFolders());
 	}, []);
 
@@ -40,6 +42,7 @@ function Folders() {
 					}}
 				/>
 				<ItemInput
+					ref={inputRef}
 					placeholder="New Folder"
 					icon={<AddFolderIcon className="folders__icon-add" />}
 					onAdd={(value) => {

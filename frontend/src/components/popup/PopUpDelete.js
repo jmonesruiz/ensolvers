@@ -10,6 +10,11 @@ function PopUpDelete(props) {
 
 	return (
 		<PopUp
+			onSubmit={(e) => {
+				e.preventDefault();
+				props.onDelete(item.id);
+				dispatch(closePopUp());
+			}}
 			title={`Delete ${props.type}`}
 			body={
 				<>
@@ -19,18 +24,13 @@ function PopUpDelete(props) {
 					<div className="pop-up-delete__name">{item.name}</div>
 					<div className="pop-up-delete__actions">
 						<button
+							type="button"
 							className="pop-up-delete__btn-cancel"
 							onClick={() => dispatch(closePopUp())}
 						>
 							Cancel
 						</button>
-						<button
-							className="pop-up-delete__btn-delete"
-							onClick={() => {
-								props.onDelete(item.id);
-								dispatch(closePopUp());
-							}}
-						>
+						<button className="pop-up-delete__btn-delete" type="submit">
 							Delete
 						</button>
 					</div>

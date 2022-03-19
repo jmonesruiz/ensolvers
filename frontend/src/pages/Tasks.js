@@ -16,7 +16,8 @@ import TaskTableElement from "../components/table/TaskTableElement";
 import PopUpDelete from "../components/popup/PopUpDelete";
 import PopUpEdit from "../components/popup/PopUpEdit";
 import { openPopUp } from "../state/popup/popupSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../services/api";
 
 function Tasks() {
 	const { folderId } = useParams();
@@ -24,9 +25,18 @@ function Tasks() {
 	const currentFolder = useSelector((state) => state.tasks.currentFolder);
 	const popUpStatus = useSelector((state) => state.popup.status);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchTasks(folderId));
+		async function checkFolder() {
+			const exists = await api.checkFolderExists(folderId);
+			if (exists) {
+				dispatch(fetchTasks(folderId));
+			} else {
+				navigate("../folders");
+			}
+		}
+		checkFolder();
 		return () => {
 			dispatch(reset());
 		};

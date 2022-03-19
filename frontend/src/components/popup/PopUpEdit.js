@@ -18,6 +18,13 @@ function PopUpEdit(props) {
 
 	return (
 		<PopUp
+			onSubmit={(e) => {
+				e.preventDefault();
+				if (valid) {
+					props.onEdit(item.id, value);
+					dispatch(closePopUp());
+				}
+			}}
 			title={`Edit ${props.type}`}
 			body={
 				<>
@@ -36,19 +43,13 @@ function PopUpEdit(props) {
 					</div>
 					<div className="pop-up-edit__actions">
 						<button
+							type="button"
 							className="pop-up-edit__btn-cancel"
 							onClick={() => dispatch(closePopUp())}
 						>
 							Cancel
 						</button>
-						<button
-							className="pop-up-edit__btn-save"
-							onClick={() => {
-								props.onEdit(item.id, value);
-								dispatch(closePopUp());
-							}}
-							disabled={!valid}
-						>
+						<button type="submit" className="pop-up-edit__btn-save" disabled={!valid}>
 							Save
 						</button>
 					</div>

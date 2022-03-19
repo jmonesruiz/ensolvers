@@ -9,7 +9,9 @@ function PopUp(props) {
 				<header className="pop-up__header">
 					<h2 className="pop-up__title">{props.title}</h2>
 				</header>
-				<main className="pop-up__main">{props.body}</main>
+				<form onSubmit={props.onSubmit} className="pop-up__main">
+					{props.body}
+				</form>
 			</div>
 			<div className="overlay"></div>
 		</>,

@@ -15,7 +15,6 @@ const fetchFolders = async () => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -32,7 +31,6 @@ const removeFolder = async (id) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -50,7 +48,6 @@ const editFolder = async (id, newName) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -68,7 +65,6 @@ const addFolder = async (name) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -85,7 +81,6 @@ const fetchTasks = async (folderId) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -102,7 +97,6 @@ const removeTask = async (folderId, id) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -120,7 +114,6 @@ const editTask = async (folderId, id, newName) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -138,7 +131,6 @@ const toggleTask = async (folderId, id, newName) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
 		return;
 	}
 };
@@ -156,7 +148,22 @@ const addTask = async (folderId, name) => {
 			return;
 		}
 	} catch (error) {
-		console.log(error);
+		return;
+	}
+};
+
+const checkFolderExists = async (folderId) => {
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/folders/${folderId}`,
+			method: "GET",
+		});
+		if (result.data.success) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (error) {
 		return;
 	}
 };
@@ -171,4 +178,5 @@ export default {
 	editTask,
 	toggleTask,
 	addTask,
+	checkFolderExists,
 };

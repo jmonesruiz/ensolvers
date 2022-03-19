@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ItemInput.scss";
 
-function ItemInput(props) {
+const ItemInput = React.forwardRef((props, ref) => {
 	const [value, setValue] = useState("");
 
 	const valid = value.trim() !== "";
@@ -18,6 +18,7 @@ function ItemInput(props) {
 			}}
 		>
 			<input
+				ref={ref}
 				type="text"
 				name=""
 				id=""
@@ -38,6 +39,6 @@ function ItemInput(props) {
 			</button>
 		</form>
 	);
-}
+});
 
 export default ItemInput;

@@ -3,6 +3,7 @@ import "./App.scss";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Folders from "../pages/Folders";
 import Tasks from "../pages/Tasks";
+import NotificationDispatcher from "../components/notification/NotificationDispatcher";
 
 function App() {
 	return (
@@ -13,6 +14,7 @@ function App() {
 				<Route path="tasks/:folderId" element={<Tasks />} />
 				<Route path="*" element={<Navigate to="folders" />} />
 			</Routes>
+			<NotificationDispatcher />
 		</div>
 	);
 }
