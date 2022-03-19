@@ -48,15 +48,23 @@ async function updateFolderDb(db, id, newName) {
 export const updateFolder = async (req, res) => {
 	if (req.params && req.params.folderid) {
 		if (req.body.newName) {
-			const result = await execute(updateFolderDb, [req.params.folderid, req.body.newName]);
-			if (result.success) {
-				sendJsonResponse(res, 200, result);
-			} else {
-				if (result.error.message === "Not found") {
-					sendJsonResponse(res, 404, result);
+			const parsedId = Number(req.params.folderid);
+			if (!Number.isNaN(parsedId)) {
+				const result = await execute(updateFolderDb, [parsedId, req.body.newName]);
+				if (result.success) {
+					sendJsonResponse(res, 200, result);
 				} else {
-					sendJsonResponse(res, 500, result);
+					if (result.error.message === "Not found") {
+						sendJsonResponse(res, 404, result);
+					} else {
+						sendJsonResponse(res, 500, result);
+					}
 				}
+			} else {
+				sendJsonResponse(res, 400, {
+					success: false,
+					error: { message: "Folder id should be integer" },
+				});
 			}
 		} else {
 			sendJsonResponse(res, 400, {
@@ -81,15 +89,23 @@ async function deleteFolderDb(db, id) {
 }
 export const deleteFolder = async (req, res) => {
 	if (req.params && req.params.folderid) {
-		const result = await execute(deleteFolder, { id: req.params.folderid });
-		if (result.success) {
-			sendJsonResponse(res, 200, result);
-		} else {
-			if (result.error.message === "Not found") {
-				sendJsonResponse(res, 404, result);
+		const parsedId = Number(req.params.folderid);
+		if (!Number.isNaN(parsedId)) {
+			const result = await execute(deleteFolderDb, { id: req.params.folderid });
+			if (result.success) {
+				sendJsonResponse(res, 200, result);
 			} else {
-				sendJsonResponse(res, 500, result);
+				if (result.error.message === "Not found") {
+					sendJsonResponse(res, 404, result);
+				} else {
+					sendJsonResponse(res, 500, result);
+				}
 			}
+		} else {
+			sendJsonResponse(res, 400, {
+				success: false,
+				error: { message: "Folder id should be integer" },
+			});
 		}
 	} else {
 		sendJsonResponse(res, 400, {

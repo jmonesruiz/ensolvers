@@ -16,10 +16,10 @@ router.get("/", getFolders);
 router.post("/", addFolder);
 
 //update folder
-router.put(":folderid", updateFolder);
+router.put("/:folderid", updateFolder);
 
 //delete folder
-router.delete(":folderid", deleteFolder);
+router.delete("/:folderid", deleteFolder);
 
 //setup task routes
 router.use("/:folderid", taskRoutes);
