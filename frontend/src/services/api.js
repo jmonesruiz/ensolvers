@@ -74,31 +74,91 @@ const addFolder = async (name) => {
 };
 
 const fetchTasks = async (folderId) => {
-	const id = parseInt(folderId);
-	if (tasks.has(id)) {
-		return {
-			currentFolder: folders.find((a) => a.id === id),
-			tasks: tasks.get(id),
-		};
-	} else {
-		return { currentFolder: folders.find((a) => a.id === id), tasks: [] };
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/tasks/${folderId}`,
+			method: "GET",
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
 	}
 };
 
-const removeTask = async (id) => {
-	return true;
+const removeTask = async (folderId, id) => {
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/tasks/${folderId}/${id}`,
+			method: "DELETE",
+		});
+		if (result.data.success) {
+			return true;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
-const editTask = async (id, newName) => {
-	return true;
+const editTask = async (folderId, id, newName) => {
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/tasks/${folderId}/${id}`,
+			method: "PUT",
+			data: { newName },
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
-const toggleTask = async (id, newName) => {
-	return true;
+const toggleTask = async (folderId, id, newName) => {
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/tasks/${folderId}/${id}`,
+			method: "PUT",
+			data: { toggle: true },
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
-const addTask = async (name) => {
-	return { id: name, name };
+const addTask = async (folderId, name) => {
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/tasks/${folderId}`,
+			method: "POST",
+			data: { name },
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
 export default {

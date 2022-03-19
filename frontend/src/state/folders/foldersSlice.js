@@ -38,7 +38,6 @@ const foldersSlice = createSlice({
 export const fetchFolders = () => {
 	return async (dispatch) => {
 		const folders = await services.fetchFolders();
-		console.log(folders);
 		if (folders) {
 			dispatch(foldersSlice.actions.foldersUpdated({ folders }));
 		}

@@ -20,17 +20,7 @@ const tasksSlice = createSlice({
 		taskEdited: (prev, action) => {
 			prev.tasks = prev.tasks.map((item) => {
 				if (item.id === action.payload.id) {
-					return { ...item, name: action.payload.newName };
-				} else {
-					return item;
-				}
-			});
-			return prev;
-		},
-		taskToggle: (prev, action) => {
-			prev.tasks = prev.tasks.map((item) => {
-				if (item.id === action.payload.id) {
-					return { ...item, done: !item.done };
+					return action.payload;
 				} else {
 					return item;
 				}
@@ -41,6 +31,9 @@ const tasksSlice = createSlice({
 			prev.tasks.push(action.payload.newTask);
 			return prev;
 		},
+		reset: () => {
+			return { currentFolder: { name: "" }, tasks: [] };
+		},
 	},
 });
 
@@ -50,7 +43,7 @@ export const fetchTasks = (folderId) => {
 		if (data) {
 			dispatch(
 				tasksSlice.actions.tasksFetched({
-					currentFolder: data.currentFolder,
+					currentFolder: data.folder,
 					tasks: data.tasks,
 				})
 			);
@@ -58,37 +51,41 @@ export const fetchTasks = (folderId) => {
 	};
 };
 
-export const deleteTask = (id) => {
+export const deleteTask = (folderId, id) => {
 	return async (dispatch) => {
-		if (await services.removeTask(id)) {
+		if (await services.removeTask(folderId, id)) {
 			dispatch(tasksSlice.actions.taskRemoved({ id }));
 		}
 	};
 };
 
-export const editTask = (id, newName) => {
+export const editTask = (folderId, id, newName) => {
 	return async (dispatch) => {
-		if (await services.editTask(id, newName)) {
-			dispatch(tasksSlice.actions.taskEdited({ id, newName }));
+		const editedTask = await services.editTask(folderId, id, newName);
+		if (editedTask) {
+			dispatch(tasksSlice.actions.taskEdited(editedTask));
 		}
 	};
 };
 
-export const toggleTask = (id) => {
+export const toggleTask = (folderId, id) => {
 	return async (dispatch) => {
-		if (await services.toggleTask(id)) {
-			dispatch(tasksSlice.actions.taskToggle({ id }));
+		const editedTask = await services.toggleTask(folderId, id);
+		if (editedTask) {
+			dispatch(tasksSlice.actions.taskEdited(editedTask));
 		}
 	};
 };
 
-export const addTask = (name) => {
+export const addTask = (folderId, name) => {
 	return async (dispatch) => {
-		const newTask = await services.addTask(name);
+		const newTask = await services.addTask(folderId, name);
 		if (newTask) {
 			dispatch(tasksSlice.actions.taskAdded({ newTask }));
 		}
 	};
 };
+
+export const { reset } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

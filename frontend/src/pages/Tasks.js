@@ -4,7 +4,14 @@ import Header from "../components/header/Header";
 import Table from "../components/table/Table";
 import ItemInput from "../components/itemInput/ItemInput";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask, editTask, fetchTasks } from "../state/tasks/tasksSlice";
+import {
+	addTask,
+	deleteTask,
+	editTask,
+	fetchTasks,
+	toggleTask,
+	reset,
+} from "../state/tasks/tasksSlice";
 import TaskTableElement from "../components/table/TaskTableElement";
 import PopUpDelete from "../components/popup/PopUpDelete";
 import PopUpEdit from "../components/popup/PopUpEdit";
@@ -20,6 +27,9 @@ function Tasks() {
 
 	useEffect(() => {
 		dispatch(fetchTasks(folderId));
+		return () => {
+			dispatch(reset());
+		};
 	}, []);
 
 	return (
@@ -28,7 +38,12 @@ function Tasks() {
 				<Header title="Folders" subtitle={currentFolder.name} backTo="../folders" />
 				<Table
 					items={tasks.map((item) => (
-						<TaskTableElement item={item} />
+						<TaskTableElement
+							item={item}
+							onToggle={() => {
+								dispatch(toggleTask(currentFolder.id, item.id));
+							}}
+						/>
 					))}
 					rows={6}
 					onEdit={(index) => {
@@ -43,17 +58,20 @@ function Tasks() {
 				<ItemInput
 					placeholder="New Task"
 					onAdd={(value) => {
-						dispatch(addTask(value));
+						dispatch(addTask(currentFolder.id, value));
 					}}
 				/>
 			</div>
 			{popUpStatus === "DELETE" && (
-				<PopUpDelete type="task" onDelete={(id) => dispatch(deleteTask(id))} />
+				<PopUpDelete
+					type="task"
+					onDelete={(id) => dispatch(deleteTask(currentFolder.id, id))}
+				/>
 			)}
 			{popUpStatus === "EDIT" && (
 				<PopUpEdit
 					type="task"
-					onEdit={(id, newValue) => dispatch(editTask(id, newValue))}
+					onEdit={(id, newValue) => dispatch(editTask(currentFolder.id, id, newValue))}
 				/>
 			)}
 		</>

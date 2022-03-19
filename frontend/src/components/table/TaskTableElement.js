@@ -1,11 +1,8 @@
 import React from "react";
 import "./TaskTableElement.scss";
 import { TiTick } from "react-icons/ti";
-import { useDispatch } from "react-redux";
-import { toggleTask } from "../../state/tasks/tasksSlice";
 
 function TaskTableElement(props) {
-	const dispatch = useDispatch();
 	return (
 		<label htmlFor={`task-table-element-${props.item.id}`} className="task-table-element">
 			<input
@@ -15,7 +12,7 @@ function TaskTableElement(props) {
 				className={"task-table-element__checkbox-input"}
 				checked={props.item.done}
 				onChange={(e) => {
-					dispatch(toggleTask(props.item.id));
+					props.onToggle();
 				}}
 			/>
 			<div className="task-table-element__checkbox">
