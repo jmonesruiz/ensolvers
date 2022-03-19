@@ -2,7 +2,7 @@ import webpack from "webpack";
 import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
-const SRC_DIR = path.resolve("src");
+const SRC_DIR = path.resolve("src/react-app");
 const OUTPUT_DIR = path.resolve("dist");
 
 const defaultInclude = [SRC_DIR];
