@@ -14,10 +14,11 @@ Solution by Juan Mones Ruiz
 -   Toast notifications
 
 ## Technologies
-
+Exact versions can be found in the projects' package.json files
 ### Frontend
 
--   Built with React, react-router and redux
+-   Built with React, react-router and Redux Toolkit.
+-   HTTP Requests handled with Axios
 -   Styled with Sass
 -   Compiled and bundled with Babel and Webpack
 -   Served with Express server configured to support client-side-routing
@@ -30,7 +31,7 @@ Solution by Juan Mones Ruiz
 ## Installation
 
 -   Clone this repo
--   Make sure you have Node and NPM installed
+-   Make sure you have the latest version of Node and NPM installed
 -   Execute start.sh
 
 ### Troubleshooting
