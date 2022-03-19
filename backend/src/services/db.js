@@ -16,6 +16,7 @@ export const execute = async (dbTask, args) => {
 			filename: dbDir,
 			driver: sqlite.Database,
 		});
+		db.run("PRAGMA foreign_keys = ON");
 		const data = args ? await dbTask(db, ...args) : await dbTask(db);
 		db.close();
 		return data ? { success: true, data } : { success: true };
@@ -24,7 +25,7 @@ export const execute = async (dbTask, args) => {
 	}
 };
 
-function createTables(db) {
+async function createTables(db) {
 	db.run("CREATE TABLE IF NOT EXISTS Folder (id INTEGER PRIMARY KEY, name TEXT NOT NULL)");
 	db.run(
 		"CREATE TABLE IF NOT EXISTS Task (id INTEGER PRIMARY KEY, done INTEGER NOT NULL, name TEXT NOT NULL, id_folder INTEGER NOT NULL, FOREIGN KEY (id_folder) REFERENCES Folder(id) ON UPDATE RESTRICT ON DELETE CASCADE)"
