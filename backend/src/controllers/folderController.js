@@ -14,6 +14,34 @@ export const getFolders = async (req, res) => {
 	}
 };
 
+//get folder
+async function getFolderDb(db, id) {
+	return await db.get("SELECT * FROM Folder WHERE id = :id", { ":id": id });
+}
+export const getFolder = async (req, res) => {
+	if (req.params && req.params.folderid) {
+		const parsedId = Number(req.params.folderid);
+		if (!Number.isNaN(parsedId)) {
+			const result = await execute(getFolderDb, [parsedId]);
+			if (result.success) {
+				sendJsonResponse(res, 200, result);
+			} else {
+				sendJsonResponse(res, 500, result);
+			}
+		} else {
+			sendJsonResponse(res, 400, {
+				success: false,
+				error: { message: "Folder id should be integer" },
+			});
+		}
+	} else {
+		sendJsonResponse(res, 400, {
+			success: false,
+			error: { message: 'Missing "folderid" in request parameters' },
+		});
+	}
+};
+
 //create folder
 async function addFolderDb(db, name) {
 	const result = await db.run("INSERT INTO Folder (name) VALUES (:name)", { ":name": name });
