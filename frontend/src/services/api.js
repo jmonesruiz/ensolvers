@@ -1,35 +1,76 @@
-const folders = [
-	{ id: 0, name: "Work" },
-	{ id: 1, name: "Daily tasks" },
-	{ id: 2, name: "Schoolwork" },
-	{ id: 3, name: "Other" },
-];
+import axios from "axios";
+import { apiConfig } from "../config";
 
-const tasks = new Map([
-	[
-		0,
-		[
-			{ id: 0, done: false, name: "Finish technical task" },
-			{ id: 1, done: false, name: "Write report" },
-			{ id: 2, done: true, name: "Send resume" },
-		],
-	],
-]);
+const baseUrl = `http://${apiConfig.adress}:${apiConfig.port}`;
 
 const fetchFolders = async () => {
-	return folders;
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/folders`,
+			method: "GET",
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
 const removeFolder = async (id) => {
-	return true;
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/folders/${id}`,
+			method: "DELETE",
+		});
+		if (result.data.success) {
+			return true;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
 const editFolder = async (id, newName) => {
-	return true;
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/folders/${id}`,
+			method: "PUT",
+			data: { newName },
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
 const addFolder = async (name) => {
-	return { id: name, name };
+	try {
+		const result = await axios({
+			url: `${baseUrl}/api/folders`,
+			method: "POST",
+			data: { name },
+		});
+		if (result.data.success) {
+			return result.data.data;
+		} else {
+			return;
+		}
+	} catch (error) {
+		console.log(error);
+		return;
+	}
 };
 
 const fetchTasks = async (folderId) => {

@@ -18,9 +18,10 @@ const foldersSlice = createSlice({
 			return prev;
 		},
 		folderEdited: (prev, action) => {
+			console.log(action.payload);
 			prev = prev.map((item) => {
 				if (item.id === action.payload.id) {
-					return { ...item, name: action.payload.newName };
+					return { ...item, name: action.payload.name };
 				} else {
 					return item;
 				}
@@ -37,6 +38,7 @@ const foldersSlice = createSlice({
 export const fetchFolders = () => {
 	return async (dispatch) => {
 		const folders = await services.fetchFolders();
+		console.log(folders);
 		if (folders) {
 			dispatch(foldersSlice.actions.foldersUpdated({ folders }));
 		}
@@ -53,8 +55,9 @@ export const deleteFolder = (id) => {
 
 export const editFolder = (id, newName) => {
 	return async (dispatch) => {
-		if (await services.editFolder(id, newName)) {
-			dispatch(foldersSlice.actions.folderEdited({ id, newName }));
+		const editedFolder = await services.editFolder(id, newName);
+		if (editedFolder) {
+			dispatch(foldersSlice.actions.folderEdited(editedFolder));
 		}
 	};
 };
