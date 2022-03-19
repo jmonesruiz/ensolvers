@@ -1,5 +1,4 @@
 import express from "express";
-import taskRoutes from "./taskRoutes.js";
 import {
 	getFolders,
 	addFolder,
@@ -20,8 +19,5 @@ router.put("/:folderid", updateFolder);
 
 //delete folder
 router.delete("/:folderid", deleteFolder);
-
-//setup task routes
-router.use("/:folderid", taskRoutes);
 
 export default router;
