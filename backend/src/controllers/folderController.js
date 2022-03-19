@@ -91,7 +91,7 @@ export const deleteFolder = async (req, res) => {
 	if (req.params && req.params.folderid) {
 		const parsedId = Number(req.params.folderid);
 		if (!Number.isNaN(parsedId)) {
-			const result = await execute(deleteFolderDb, { id: req.params.folderid });
+			const result = await execute(deleteFolderDb, [req.params.folderid]);
 			if (result.success) {
 				sendJsonResponse(res, 200, result);
 			} else {
