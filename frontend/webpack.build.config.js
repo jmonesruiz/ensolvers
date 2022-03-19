@@ -12,7 +12,7 @@ export default {
 	mode: "production",
 	output: {
 		path: OUTPUT_DIR,
-		publicPath: "/",
+		publicPath: "./",
 		filename: "bundle.js",
 	},
 	module: {

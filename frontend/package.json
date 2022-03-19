@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
+		"start": "npm run dev",
 		"dev": "webpack-dev-server --hot --host localhost --port 4000 --config=./webpack.dev.config.js --open",
 		"build": "webpack --config webpack.build.config.js"
 	},
