@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function FolderTableElement(props) {
 	return (
-		<Link to={`../todos/${props.item.id}`} className="folder-table-element">
+		<Link to={`../tasks/${props.item.id}`} className="folder-table-element">
 			<div className="folder-table-element__icon-container">
 				<FolderIcon className="folder-table-element__icon--closed" />
 				<FolderOpenIcon className="folder-table-element__icon--open" />

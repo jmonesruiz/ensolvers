@@ -6,12 +6,12 @@ import { AiFillEdit as EditIcon } from "react-icons/ai";
 function Table(props) {
 	let rows = props.items.map((item, index) => (
 		<div className="table__row" key={index}>
-			<div className="table__cell">{item.element}</div>
+			<div className="table__cell">{item}</div>
 			<div className="table__cell">
 				<button
 					className="table__btn--edit"
 					onClick={() => {
-						props.onEdit(item.id);
+						props.onEdit(index);
 					}}
 				>
 					<EditIcon className="table__icon-edit" />
@@ -21,7 +21,7 @@ function Table(props) {
 				<button
 					className="table__btn--delete"
 					onClick={() => {
-						props.onDelete(item.id);
+						props.onDelete(index);
 					}}
 				>
 					<DeleteIcon className="table__icon-delete" />

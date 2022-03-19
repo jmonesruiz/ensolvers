@@ -21,24 +21,21 @@ function Folders() {
 		dispatch(fetchFolders());
 	}, []);
 
-	const tableItems = folders.map((item) => {
-		return { id: item.id, element: <FolderTableElement item={item} /> };
-	});
-
 	return (
 		<>
 			<div className="folders">
 				<Header title="Folders" />
 				<Table
-					items={tableItems}
+					items={folders.map((item) => (
+						<FolderTableElement item={item} />
+					))}
 					rows={6}
-					onEdit={(id) => {
-						const item = folders.find((a) => a.id === id);
+					onEdit={(index) => {
+						const item = folders[index];
 						dispatch(openPopUp({ status: "EDIT", data: item }));
 					}}
-					onDelete={(id) => {
-						const item = folders.find((a) => a.id === id);
-						console.log(item);
+					onDelete={(index) => {
+						const item = folders[index];
 						dispatch(openPopUp({ status: "DELETE", data: item }));
 					}}
 				/>
@@ -56,10 +53,7 @@ function Folders() {
 			{popUpStatus === "EDIT" && (
 				<PopUpEdit
 					type="folder"
-					onEdit={(id, newValue) => {
-						console.log("holi");
-						dispatch(editFolder(id, newValue));
-					}}
+					onEdit={(id, newValue) => dispatch(editFolder(id, newValue))}
 				/>
 			)}
 		</>
