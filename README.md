@@ -33,6 +33,7 @@ Exact versions can be found in the projects' package.json files
 -   Clone this repo
 -   Make sure you have the latest version of Node and NPM installed
 -   Execute start.sh
+-   Make sure to kill both server processes after you are done
 
 ### Troubleshooting
 
