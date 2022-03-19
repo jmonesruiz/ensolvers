@@ -21,7 +21,7 @@ async function addFolderDb(db, name) {
 }
 export const addFolder = async (req, res) => {
 	if (req.body.name) {
-		const result = await execute(addFolderDb, { name: req.body.name });
+		const result = await execute(addFolderDb, [req.body.name]);
 		if (result.success) {
 			sendJsonResponse(res, 201, result);
 		} else {
@@ -48,10 +48,7 @@ async function updateFolderDb(db, id, newName) {
 export const updateFolder = async (req, res) => {
 	if (req.params && req.params.folderid) {
 		if (req.body.newName) {
-			const result = await execute(updateFolderDb, {
-				id: req.params.folderid,
-				newName: req.body.newName,
-			});
+			const result = await execute(updateFolderDb, [req.params.folderid, req.body.newName]);
 			if (result.success) {
 				sendJsonResponse(res, 200, result);
 			} else {
